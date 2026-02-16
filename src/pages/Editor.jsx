@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
+import RichTextEditor from '../components/RichTextEditor'
 
 export default function Editor() {
   const [searchParams] = useSearchParams()
@@ -14,7 +15,12 @@ export default function Editor() {
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  // Load existing post if editing
+  useEffect(() => {
+    if (!user) {
+      navigate('/login')
+    }
+  }, [user, navigate])
+
   useEffect(() => {
     if (postId) {
       loadPost()
@@ -51,24 +57,30 @@ export default function Editor() {
     setSaving(true)
 
     try {
+      // Generate plain text excerpt from HTML
+      const tempDiv = document.createElement('div')
+      tempDiv.innerHTML = content
+      const plainText = tempDiv.textContent || tempDiv.innerText || ''
+      const excerpt = plainText.substring(0, 200).trim() + '...'
+
       if (postId) {
-        // Update existing post
         const { error } = await supabase
           .from('posts')
           .update({
             title: title.trim(),
-            content: content.trim(),
+            content: content,
+            excerpt: excerpt,
           })
           .eq('id', postId)
 
         if (error) throw error
       } else {
-        // Create new post
         const { error } = await supabase
           .from('posts')
           .insert({
             title: title.trim(),
-            content: content.trim(),
+            content: content,
+            excerpt: excerpt,
             user_id: user.id,
           })
 
@@ -101,17 +113,16 @@ export default function Editor() {
 
   return (
     <div className="min-h-screen bg-paper">
-      <div className="max-w-2xl mx-auto px-6 py-12">
+      <div className="max-w-4xl mx-auto px-6 py-12">
         {/* Editor Header */}
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-3xl font-sans font-bold text-ink">
+          <h1 className="font-sans text-3xl font-bold text-ink">
             {postId ? 'Edit Post' : 'New Post'}
           </h1>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <button
               onClick={handleCancel}
-              className="px-4 py-2 text-accent hover:text-ink font-sans text-sm 
-                       transition-colors"
+              className="px-4 py-2 text-accent hover:text-ink font-sans text-sm transition-colors"
             >
               Cancel
             </button>
@@ -141,32 +152,23 @@ export default function Editor() {
           />
         </div>
 
-        {/* Content Textarea */}
-        <div>
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Start writing...
-
-Use double line breaks to create new paragraphs.
-
-Write naturally and let your thoughts flow."
-            className="w-full min-h-[500px] px-0 py-4 font-serif text-lg md:text-xl text-ink
-                     placeholder-stone-300 border-0 resize-none
-                     focus:outline-none bg-transparent leading-relaxed"
-          />
-        </div>
+        {/* Rich Text Editor */}
+        <RichTextEditor 
+          content={content} 
+          onChange={setContent}
+        />
 
         {/* Writing Tips */}
         <div className="mt-12 p-6 bg-stone-100 rounded-lg">
           <h3 className="font-sans text-base font-semibold text-ink mb-3">
-            Writing Tips
+            ✨ New Features
           </h3>
           <ul className="font-sans text-sm text-accent space-y-2">
-            <li>• Use double line breaks to separate paragraphs</li>
-            <li>• Keep paragraphs focused on a single idea</li>
-            <li>• Write in your natural voice</li>
-            <li>• Don't worry about perfection—just write</li>
+            <li>• <strong>Rich Text:</strong> Bold, italic, headings, lists</li>
+            <li>• <strong>Images:</strong> Click 📷 Image button to upload</li>
+            <li>• <strong>Videos:</strong> Click 🎥 Video to add YouTube links</li>
+            <li>• <strong>AI Assistant:</strong> Use Gemini to generate text</li>
+            <li>• <strong>Styling:</strong> Change fonts and colors</li>
           </ul>
         </div>
       </div>

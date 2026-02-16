@@ -53,15 +53,6 @@ export default function PostView() {
     return new Date(dateString).toLocaleDateString('en-US', options)
   }
 
-  // Format content into paragraphs
-  const formatContent = (content) => {
-    return content.split('\n\n').map((paragraph, idx) => (
-      <p key={idx} className="mb-6">
-        {paragraph}
-      </p>
-    ))
-  }
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -105,10 +96,45 @@ export default function PostView() {
           {post.title}
         </h1>
 
-        {/* Content */}
-        <div className="prose-reading">
-          {formatContent(post.content)}
-        </div>
+        {/* Content - Render HTML */}
+        <div 
+          className="prose-reading prose max-w-none"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
+
+        {/* Custom Styles for Rich Content */}
+        <style>{`
+          .prose img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 2rem 0;
+          }
+          
+          .prose iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 8px;
+            margin: 2rem 0;
+          }
+          
+          .prose ul, .prose ol {
+            margin-left: 1.5rem;
+          }
+          
+          .prose li {
+            margin-bottom: 0.5rem;
+          }
+          
+          .prose strong {
+            font-weight: 700;
+            color: #0f172a;
+          }
+          
+          .prose em {
+            font-style: italic;
+          }
+        `}</style>
 
         {/* Admin Actions */}
         {user && (
