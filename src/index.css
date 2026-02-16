@@ -1,0 +1,90 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-serif bg-paper text-ink antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans;
+  }
+}
+
+@layer components {
+  /* Reading-optimized prose styles */
+  .prose-reading {
+    @apply text-ink;
+  }
+  
+  .prose-reading h1 {
+    @apply text-4xl md:text-5xl font-sans font-bold mb-6 leading-tight text-ink;
+  }
+  
+  .prose-reading h2 {
+    @apply text-3xl md:text-4xl font-sans font-bold mt-10 mb-4 leading-tight text-ink;
+  }
+  
+  .prose-reading h3 {
+    @apply text-2xl md:text-3xl font-sans font-semibold mt-8 mb-3 text-ink;
+  }
+  
+  .prose-reading p {
+    @apply text-lg md:text-xl font-serif leading-relaxed mb-6 text-ink;
+  }
+  
+  .prose-reading a {
+    @apply text-accent underline hover:text-ink transition-colors;
+  }
+  
+  .prose-reading blockquote {
+    @apply border-l-4 border-accent pl-6 italic my-8 text-accent;
+  }
+  
+  .prose-reading ul, .prose-reading ol {
+    @apply my-6 space-y-2 text-lg font-serif;
+  }
+  
+  .prose-reading li {
+    @apply leading-relaxed;
+  }
+  
+  .prose-reading code {
+    @apply bg-stone-100 px-2 py-1 rounded text-sm font-mono text-ink;
+  }
+  
+  .prose-reading pre {
+    @apply bg-stone-100 p-4 rounded-lg overflow-x-auto my-6;
+  }
+  
+  .prose-reading pre code {
+    @apply bg-transparent p-0;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fafaf9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
