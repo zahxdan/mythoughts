@@ -49,7 +49,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-paper">
       <div className="max-w-2xl mx-auto px-6 py-12">
-        {/* Header */}
         <header className="mb-16 text-center">
           <h1 className="text-5xl md:text-6xl font-sans font-bold text-ink mb-4">
             MyThoughts
@@ -59,7 +58,6 @@ export default function Home() {
           </p>
         </header>
 
-        {/* Posts List */}
         <main className="space-y-12">
           {posts.length === 0 ? (
             <div className="text-center py-16">
@@ -71,30 +69,25 @@ export default function Home() {
             posts.map((post) => (
               <article key={post.id} className="group">
                 <Link to={`/post/${post.id}`}>
-                  {/* Date */}
                   <time className="text-sm text-accent font-sans uppercase tracking-wide block mb-2">
                     {formatDate(post.created_at)}
                   </time>
                   
-                  {/* Title */}
                   <h2 className="text-3xl md:text-4xl font-sans font-bold text-ink mb-3
                                group-hover:text-accent transition-colors">
                     {post.title}
                   </h2>
                   
-                  {/* Excerpt */}
                   <p className="text-lg text-ink font-serif leading-relaxed mb-4">
                     {getExcerpt(post.content)}
                   </p>
                   
-                  {/* Read More */}
                   <span className="text-sm font-sans font-medium text-accent 
                                  group-hover:text-ink transition-colors">
                     Read more →
                   </span>
                 </Link>
 
-                {/* Admin Edit Link */}
                 {user && (
                   <div className="mt-3">
                     <Link
