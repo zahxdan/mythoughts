@@ -1,4 +1,3 @@
-cat > src/components/RichTextEditor.jsx << 'ENDOFFILE'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 
@@ -94,4 +93,3 @@ export default function RichTextEditor({ content, onChange }) {
     </div>
   )
 }
-ENDOFFILE

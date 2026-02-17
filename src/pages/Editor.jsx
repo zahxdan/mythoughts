@@ -37,7 +37,6 @@ export default function Editor() {
         .single()
 
       if (error) throw error
-
       setTitle(data.title)
       setContent(data.content)
     } catch (error) {
@@ -57,7 +56,6 @@ export default function Editor() {
     setSaving(true)
 
     try {
-      // Generate plain text excerpt from HTML
       const tempDiv = document.createElement('div')
       tempDiv.innerHTML = content
       const plainText = tempDiv.textContent || tempDiv.innerText || ''
@@ -114,7 +112,6 @@ export default function Editor() {
   return (
     <div className="min-h-screen bg-paper">
       <div className="max-w-4xl mx-auto px-6 py-12">
-        {/* Editor Header */}
         <div className="mb-8 flex items-center justify-between">
           <h1 className="font-sans text-3xl font-bold text-ink">
             {postId ? 'Edit Post' : 'New Post'}
@@ -138,7 +135,6 @@ export default function Editor() {
           </div>
         </div>
 
-        {/* Title Input */}
         <div className="mb-8">
           <input
             type="text"
@@ -152,25 +148,10 @@ export default function Editor() {
           />
         </div>
 
-        {/* Rich Text Editor */}
         <RichTextEditor 
           content={content} 
           onChange={setContent}
         />
-
-        {/* Writing Tips */}
-        <div className="mt-12 p-6 bg-stone-100 rounded-lg">
-          <h3 className="font-sans text-base font-semibold text-ink mb-3">
-            ✨ New Features
-          </h3>
-          <ul className="font-sans text-sm text-accent space-y-2">
-            <li>• <strong>Rich Text:</strong> Bold, italic, headings, lists</li>
-            <li>• <strong>Images:</strong> Click 📷 Image button to upload</li>
-            <li>• <strong>Videos:</strong> Click 🎥 Video to add YouTube links</li>
-            <li>• <strong>AI Assistant:</strong> Use Gemini to generate text</li>
-            <li>• <strong>Styling:</strong> Change fonts and colors</li>
-          </ul>
-        </div>
       </div>
     </div>
   )
