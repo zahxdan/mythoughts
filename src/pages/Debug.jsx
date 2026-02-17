@@ -34,6 +34,7 @@ export default function Debug() {
           <h2 className="font-bold mb-2">Environment:</h2>
           <p>Supabase URL: {import.meta.env.VITE_SUPABASE_URL ? 'Set ✅' : 'Missing ❌'}</p>
           <p>Supabase Key: {import.meta.env.VITE_SUPABASE_ANON_KEY ? 'Set ✅' : 'Missing ❌'}</p>
+          <p>Gemini Key: {import.meta.env.VITE_GEMINI_API_KEY ? 'Set ✅' : 'Missing ❌'}</p>
         </div>
       </div>
     </div>
