@@ -1,11 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
 import PostView from './pages/PostView'
 import Login from './pages/Login'
 import Editor from './pages/Editor'
-import Debug from './pages/Debug'
 
 function App() {
   return (
@@ -16,15 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/post/:id" element={<PostView />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/debug" element={<Debug />} />
-          <Route 
-            path="/editor" 
-            element={
-              <ProtectedRoute>
-                <Editor />
-              </ProtectedRoute>
-            } 
-          />
+          <Route path="/editor" element={<Editor />} />
         </Routes>
       </div>
     </Router>
